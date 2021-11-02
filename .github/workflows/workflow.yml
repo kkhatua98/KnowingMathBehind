@@ -1,8 +1,10 @@
 name:attempts
+
 on:push
+
 jobs:
   Greeting_Job:
-    run-on:ubuntu-latest
+    runs-on:ubuntu-latest
     steps:
     - name:greeting
       run:echo "Hello"
