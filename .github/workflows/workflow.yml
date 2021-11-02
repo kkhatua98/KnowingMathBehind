@@ -1,12 +1,13 @@
-name:attempts
+name: attempts
 
-on:push
+on: push
 
 jobs:
-  work:
+  greeting_workflow:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v2
-    
-    - name: greeting
-      run: echo "Hello"
+      - uses: actions/checkout@v2
+      - name: greeting
+        run: echo "Hello"
+
+
