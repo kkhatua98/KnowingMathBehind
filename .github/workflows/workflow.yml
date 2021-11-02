@@ -4,9 +4,9 @@ on:push
 
 jobs:
   Greeting_Job:
-    runs-on:ubuntu-latest
+    runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
     
-    - name:greeting
-      run:echo "Hello"
+    - name: greeting
+      run: echo "Hello"
