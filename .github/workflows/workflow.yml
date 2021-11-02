@@ -3,7 +3,7 @@ name:attempts
 on:push
 
 jobs:
-  Greeting_Job:
+  work:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
