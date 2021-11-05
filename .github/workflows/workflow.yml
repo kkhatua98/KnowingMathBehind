@@ -18,8 +18,8 @@ jobs:
       - name: listing python packages
         run: pip3 freeze
       
-#       - name: installing sphinx
-#         run: pip3 install sphinx
+      - name: installing sphinx
+        run: pip3 install sphinx
 
 
 # This is a basic workflow to help you get started with Actions
