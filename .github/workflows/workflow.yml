@@ -28,6 +28,7 @@ jobs:
          git add .
          git commit -m "Latest commit"
          git status
+         git push https://kkhatua98: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@github.com/kkhatua98/tries.git --all
 
 
 # This is a basic workflow to help you get started with Actions
