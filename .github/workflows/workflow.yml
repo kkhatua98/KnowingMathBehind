@@ -20,7 +20,7 @@ jobs:
       
       - name: listing files
         working-directory: ./source
-        run: ls
+        run: sphinx-build -t html source .
 
 
 # This is a basic workflow to help you get started with Actions
