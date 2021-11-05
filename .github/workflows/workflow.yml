@@ -20,6 +20,14 @@ jobs:
        
       - name: listing files
         run: ls
+       
+      - name: Pushing to GitHub
+        run: | 
+         git config --global user.email kaustavkhatua98@gmail.com
+         git config --global user.name 'Kaustav'
+         git add .
+         git commit -m "Latest commit"
+         git status
 
 
 # This is a basic workflow to help you get started with Actions
