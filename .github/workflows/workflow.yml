@@ -16,7 +16,6 @@ jobs:
         run: pip3 install sphinx
       
       - name: listing files
-        working-directory: ./source
         run: sphinx-build -t html source .
 
 
