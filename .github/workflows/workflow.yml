@@ -18,11 +18,18 @@ jobs:
       - name: installing pandoc
         run: sudo apt install pandoc
       
+      - name: Adding files to index.rst
+        run: echo "Welcome to first_attempt's documentation!
+             =========================================
+
+             .. toctree::
+             :maxdepth: 2
+             :caption: Contents:
+             
+             "
+      
       - name: building website
         run: sphinx-build -t html source .
-       
-      - name: listing files
-        run: ls
        
       - name: Pushing to GitHub
         run: | 
