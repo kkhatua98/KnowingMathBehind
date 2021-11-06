@@ -19,14 +19,25 @@ jobs:
         run: sudo apt install pandoc
       
       - name: Adding files to index.rst
-        run: echo "Welcome to first_attempt's documentation!
-             =========================================
-
-             .. toctree::
-             :maxdepth: 2
-             :caption: Contents:
-             
-             "
+        working-directory: ./source
+        run: |
+         echo "Welcome to first_attempt's documentation!" > index.rst
+         echo "=========================================" >> index.rst
+         echo "" >> index.rst
+         echo ".. toctree::" >> index.rst
+         echo "   :maxdepth: 2" >> index.rst
+         echo "   :caption: Contents:" >> index.rst
+         echo "" >> index.rst
+         ls *.ipynb | sed 's/^/   /' >> index.rst
+         echo "" >> index.rst
+         echo "" >> index.rst
+         echo "" >> index.rst
+         echo "Indices and tables" >> index.rst
+         echo "==================" >> index.rst
+         echo "" >> index.rst
+         echo "* :ref:\`genindex\`" >> index.rst
+         echo "* :ref:\`modindex\`" >> index.rst
+         echo "* :ref:\`search\`" >> index.rst
       
       - name: building website
         run: sphinx-build -t html source .
