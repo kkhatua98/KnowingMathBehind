@@ -6,6 +6,7 @@ Welcome to first_attempt's documentation!
    :caption: Contents:
 
    2021_10_17_PCA.ipynb
+   2021_10_29_LogisticRegression.ipynb
 
 
 
