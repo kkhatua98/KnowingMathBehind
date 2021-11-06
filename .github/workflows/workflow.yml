@@ -16,7 +16,7 @@ jobs:
         run: pip3 install sphinx nbsphinx Pygments==2.6.1 sphinx_rtd_theme
       
       - name: installing pandoc
-        run: apt install pandoc
+        run: sudo apt install pandoc
       
       - name: building website
         run: sphinx-build -t html source .
