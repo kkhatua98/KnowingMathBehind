@@ -48,6 +48,7 @@
 <li class="toctree-l2"><a class="reference internal" href="#Formulating-the-Problem">Formulating the Problem</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#Likelihood-and-Log-Likelihood">Likelihood and Log-Likelihood</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#Deriving-the-First-Derivative">Deriving the First Derivative</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#Deriving-the-Hessian-Matrix">Deriving the Hessian Matrix</a></li>
 </ul>
 </li>
 </ul>
@@ -415,6 +416,25 @@ log L &amp;= log \ \prod_{i=1}^n \ e^{\vec{x}_i^T.\vec{\beta}_1.I(y_i=1)} \ . \ 
  \ \ I(y_i=2) - P(y_i=2|\vec{x}_i) \ \ \end{bmatrix} \otimes \ \vec{x}_i
 \end{aligned}\end{split}\]</div>
 <p>Here, <span class="math notranslate nohighlight">\(\ \ \ \vec{\beta}^T = \left(\vec{\beta}_1^T \ \ \ \vec{\beta}_2^T\right)\)</span> and <span class="math notranslate nohighlight">\(\ \ \otimes\)</span> is <strong>Kronecker product</strong>.</p>
+</section>
+<section id="Deriving-the-Hessian-Matrix">
+<h2>Deriving the Hessian Matrix<a class="headerlink" href="#Deriving-the-Hessian-Matrix" title="Permalink to this headline"></a></h2>
+<p>Hessian matrix,</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\begin{aligned}
+H &amp;= \frac{\partial}{\partial \vec{\beta}}\left[ \frac{\partial}{\partial \vec{\beta}}log \ L \right]^T \\
+ &amp;= \begin{bmatrix}\frac{\partial}{\partial \vec{\beta}_1} \left[ \frac{\partial}{\partial \vec{\beta}}log \ L \right]^T \\
+    \frac{\partial}{\partial \vec{\beta}_2} \left[ \frac{\partial}{\partial \vec{\beta}}log \ L \right]^T
+    \end{bmatrix}
+\end{aligned}\end{split}\]</div>
+<p>Now,</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\begin{aligned}
+\frac{\partial}{\partial \vec{\beta}_1} \left[ \frac{\partial}{\partial \vec{\beta}}log \ L \right]^T &amp;= \frac{\partial}{\partial \vec{\beta}_1} \sum_{i=1}^n\left[ \ I(y_i=1) - P(y_i=1|\vec{x}_i) \ \ \ \ I(y_i=2) - P(y_i=2|\vec{x}_i) \ \right] \otimes \vec{x}_i^T \\
+ &amp;= \sum_{i=1}^n\left[ \ \frac{\partial}{\partial \vec{\beta}_1}\left[I(y_i=1) - P(y_i=1|\vec{x}_i)\right] \ \ \ \ \ \frac{\partial}{\partial \vec{\beta}_1}\left[I(y_i=2) - P(y_i=2|\vec{x}_i)\right] \ \right] \otimes \vec{x}_i^T \\
+ &amp;= \sum_{i=1}^n \left[ \ \ 0 - \frac{\partial}{\partial \vec{\beta}_1}P(y_i=1|\vec{x}_i) \ \ \ \  0 - \frac{\partial}{\partial \vec{\beta}_1}P(y_i=2|\vec{x}_i) \ \ \right] \otimes \vec{x}_i^T \\
+ &amp;= -\sum_{i=1}^n \left[ \ \ \frac{\partial}{\partial \vec{\beta}_1}P(y_i=1|\vec{x}_i) \ \ \ \  \frac{\partial}{\partial \vec{\beta}_1}P(y_i=2|\vec{x}_i) \ \ \right] \otimes \vec{x}_i^T
+ \end{aligned}\end{split}\]</div>
 <div class="nbinput nblast docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
 </pre></div>
