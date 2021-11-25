@@ -101,7 +101,6 @@
     text-align: unset;
 }
 </style>
-<p><img alt="Open In Colab" src="https://colab.research.google.com/assets/colab-badge.svg" /></p>
 <section id="Mathematics-Behind-Multinomial-Logistic-Regression">
 <h1>Mathematics Behind Multinomial Logistic Regression<a class="headerlink" href="#Mathematics-Behind-Multinomial-Logistic-Regression" title="Permalink to this headline"></a></h1>
 <section id="Formulating-the-Problem">
@@ -273,20 +272,20 @@ H &amp;= \frac{\partial}{\partial \vec{\beta}}\left[ \frac{\partial}{\partial \v
   -P(y_i=2|\vec{x}_i).P(y_i=1|\vec{x}_i) \ \ \ \ \ \ P(y_i=2|\vec{x}_i).P(y_i\neq2|\vec{x}_i)
   \end{bmatrix} \otimes \vec{x}_i.\vec{x}_i^T
  \end{aligned}\end{split}\]</div>
-<p><span class="math notranslate nohighlight">\(H\)</span> is positive definite. In the following way. 1. Sum of positive definite matrices is positive definite. H is sum of matrices. So, if we can show that the term inside sum is positive definite then H is positive definite. 2. Kronecker Product of two pd matrices is positive definite. It follows from the following theory:</p>
+<p>To have unique maxima to the problem, <span class="math notranslate nohighlight">\(H\)</span> has to be negative semi-definite, or <span class="math notranslate nohighlight">\(-H\)</span> positive semi-definite. We can prove it in the following way. 1. Sum of positive definite matrices is positive definite. -H is sum of matrices. So, if we can show that the term inside sum is positive definite then -H is positive definite. 2. Kronecker Product of two positive semi-definite matrices is positive semi-definite. It follows from the following theory:</p>
 <div class="highlight-none notranslate"><div class="highlight"><pre><span></span>**Theory:** Let, $\mathbf{A_{mxm}}$ has eigen vectors **$\mathbf{x_i}$** with corresponding eigen value $\mathbf{\lambda_i, i = 1, \dots, m}$;
 $\mathbf{B_{nxn}}$ has eighen vectors $\mathbf{y_j}$ with corresponding eigen value $\mathbf{\mu_j, j = 1, \dots n}$.
 Then, eigen vectors of $\mathbf{A\otimes B}$ is $\mathbf{x_i \otimes y_j}$ with corresponding eigen value $\mathbf{\lambda_i.\mu_j}$.
 
 **Proof:** Here, $Ax_i = \lambda_i x_i$ and $By_j = \mu_j y_j$. Now by the property (standard easily available on internet) of Kronecker Product $(A\otimes B)(x_i\otimes y_j) = (Ax_i)\otimes (By_j)=(\lambda_i x_i)\otimes (\mu_j y_j) = \lambda_i\mu_j(x_i\otimes y_j)$. So, $x_i\otimes y_j$ is the eigen vector corresponding to eigenvector $\lambda_i\mu_j$
 
-Now, if **A** and **B** pd then both $\lambda_i$ and $\mu_j$ are positive. So is $\lambda_i\mu_j$ showing $A\otimes B$ is pd.
+Now, if **A** and **B** pd then both $\lambda_i$ and $\mu_j$ are non-negative. So is $\lambda_i\mu_j$, showing $A\otimes B$ is positive semi-definite.
 
-So if we can show that both the operands of the Kronecker Product is pd, then H will be pd.
+So if we can show that both the operands of the Kronecker Product is positve semi-definite, then -H will be postive semi-definite.
 </pre></div>
 </div>
 <ol class="arabic simple" start="3">
-<li><p><span class="math notranslate nohighlight">\(\vec{x}_i.\vec{x}_i^T\)</span> is pd. We have to prove <span class="math notranslate nohighlight">\(\begin{bmatrix}P(y_i=1|\vec{x}_i).P(y_i\neq1|\vec{x}_i) \ \ \ \ \ - P(y_i=1|\vec{x}_i).P(y_i=2|\vec{x}_i) \\  -P(y_i=2|\vec{x}_i).P(y_i=1|\vec{x}_i) \ \ \ \ \ \ P(y_i=2|\vec{x}_i).P(y_i\neq2|\vec{x}_i)  \end{bmatrix}\)</span> is pd.</p></li>
+<li><p><span class="math notranslate nohighlight">\(\vec{x}_i.\vec{x}_i^T\)</span> is positive semi-definite. We have to prove <span class="math notranslate nohighlight">\(\begin{bmatrix}P(y_i=1|\vec{x}_i).P(y_i\neq1|\vec{x}_i) \ \ \ \ \ - P(y_i=1|\vec{x}_i).P(y_i=2|\vec{x}_i) \\  -P(y_i=2|\vec{x}_i).P(y_i=1|\vec{x}_i) \ \ \ \ \ \ P(y_i=2|\vec{x}_i).P(y_i\neq2|\vec{x}_i)  \end{bmatrix}\)</span> is positive semi-definite.</p></li>
 </ol>
 <p>Now let,</p>
 <div class="math notranslate nohighlight">
@@ -352,153 +351,7 @@ So if we can show that both the operands of the Kronecker Product is pd, then H 
 \end{aligned}\end{split}\]</div>
 <p>As, <span class="math notranslate nohighlight">\(\sum_{j=1}^2P(y_i=j|\vec{x}_i) = 1\)</span>.</p>
 <p>So, <span class="math notranslate nohighlight">\(\vec{z}^T.P.\vec{z} \geq 0\)</span>. So, P is positive semi-definite.</p>
-<p>So,</p>
-<div class="math notranslate nohighlight">
-\[\begin{split}\begin{aligned}
-\frac{\partial}{\partial \vec{\beta}_1}P(y_i=1|\vec{x}_i) &amp;=
-\begin{pmatrix}
-\frac{\partial}{\partial \beta_{11}} P(y_i=1|\vec{x}_i) \\
-\frac{\partial}{\partial \beta_{12}} P(y_i=1|\vec{x}_i) \\
-. \\
-. \\
-. \\
-\frac{\partial}{\partial \beta_{1p}} P(y_i=1|\vec{x}_i) \\
-\end{pmatrix} \\
- \\
- &amp;= \begin{pmatrix}P(y_i=1|\vec{x}_i).P(y_i\neq1|\vec{x}_i).x_{i1} \\
- P(y_i=1|\vec{x}_i).P(y_i\neq1|\vec{x}_i).x_{i2} \\
- . \\
- . \\
- . \\
- P(y_i=1|\vec{x}_i).P(y_i\neq1|\vec{x}_i).x_{ip}
- \end{pmatrix} \\
- \\
- &amp;= P(y_i=1|\vec{x}_i).P(y_i\neq1|\vec{x}_i).\begin{pmatrix}x_{i1} \\
- x_{i2} \\
- x_{i3} \\
- . \\
- . \\
- . \\
- x_{ip}
- \end{pmatrix} \\
- \\
- &amp;= P(y_i=1|\vec{x}_i).P(y_i\neq1|\vec{x}_i).\vec{x}_i
-\end{aligned}\end{split}\]</div>
-<div class="math notranslate nohighlight">
-\[P(y_i=2|\vec{x}_i) = \frac{e^{\vec{x}_i^T.\vec{\beta}_2}}{1+e^{\vec{x}_i^T.\vec{\beta}_1}+e^{\vec{x}_i^T.\vec{\beta}_2}}\]</div>
-<p>and,</p>
-<div class="math notranslate nohighlight">
-\[\begin{split}\begin{aligned}
-\frac{\partial}{\partial \beta_{1j}} P(y_i=2|\vec{x}_i) &amp;= - \frac{e^{\vec{x}_i^T.\vec{\beta}_2}.e^{\vec{x}_i^T.\vec{\beta}_1}.x_{ij}}{(1+e^{\vec{x}_i^T.\vec{\beta}_1}+e^{\vec{x}_i^T.\vec{\beta}_2})^2} \\
- &amp;= - P(y_i=1|\vec{x}_i).P(y_i=2|\vec{x}_i).x_{ij} \\
-\end{aligned}\end{split}\]</div>
-<p>So,</p>
-<div class="math notranslate nohighlight">
-\[\frac{\partial}{\partial \vec{\beta}_1}P(y_i=2|\vec{x}_i) = - P(y_i=1|\vec{x}_i).P(y_i=2|\vec{x}_i).\vec{x}_i\]</div>
-<p>So,</p>
-<div class="math notranslate nohighlight">
-\[\begin{split}\begin{aligned}
-\frac{\partial}{\partial \vec{\beta}_1}\left[\frac{\partial}{\partial \vec{\beta}}log L\right]^T &amp;= -\sum_{i=1}^n \left[ \ \ \frac{\partial}{\partial \vec{\beta}_1}P(y_i=1|\vec{x}_i) \ \ \ \  \frac{\partial}{\partial \vec{\beta}_1}P(y_i=2|\vec{x}_i) \ \ \right] \otimes \vec{x}_i^T \\
- &amp;= -\sum_{i=1}^n \left[P(y_i=1|\vec{x}_i).P(y_i\neq1|\vec{x}_i).\vec{x}_i \ \ \ \  - P(y_i=1|\vec{x}_i).P(y_i=2|\vec{x}_i).\vec{x}_i\right] \otimes \vec{x}_i^T \\
- &amp;= -\sum_{i=1}^n\left[P(y_i=1|\vec{x}_i).P(y_i\neq1|\vec{x}_i) \ \ \ \ - P(y_i=1|\vec{x}_i).P(y_i=2|\vec{x}_i)\right]\otimes\vec{x}_i\otimes\vec{x}_i^T \\
- &amp;= -\sum_{i=1}^n\left[P(y_i=1|\vec{x}_i).P(y_i\neq1|\vec{x}_i) \ \ \ \ - P(y_i=1|\vec{x}_i).P(y_i=2|\vec{x}_i)\right]\otimes\vec{x}_i.\vec{x}_i^T\end{aligned}\end{split}\]</div>
-<p>Similarly,</p>
-<div class="math notranslate nohighlight">
-\[\begin{aligned}
-\frac{\partial}{\partial \vec{\beta}_2}\left[\frac{\partial}{\partial \vec{\beta}}log L\right]^T = -\sum_{i=1}^n\left[-P(y_i=2|\vec{x}_i)P(y_i=1|\vec{x}_i) \ \ \ \ P(y_i=2|\vec{x}_i)P(y_i\neq2|\vec{x}_i)\right]\otimes\vec{x}_i.\vec{x}_i^T\end{aligned}\]</div>
-<p>So,</p>
-<div class="math notranslate nohighlight">
-\[\begin{split}\begin{aligned}
- H &amp;= \begin{bmatrix}\frac{\partial}{\partial \vec{\beta}_1} \left[ \frac{\partial}{\partial \vec{\beta}}log \ L \right]^T \\
-    \frac{\partial}{\partial \vec{\beta}_2} \left[ \frac{\partial}{\partial \vec{\beta}}log \ L \right]^T
-    \end{bmatrix} \\
-  \\
-  &amp;= \begin{bmatrix}-\sum_{i=1}^n\left[P(y_i=1|\vec{x}_i).P(y_i\neq1|\vec{x}_i) \ \ \ \ \ \ - P(y_i=1|\vec{x}_i).P(y_i=2|\vec{x}_i)\right]\otimes\vec{x}_i.\vec{x}_i^T \\
-  -\sum_{i=1}^n\left[-P(y_i=2|\vec{x}_i).P(y_i=1|\vec{x}_i) \ \ \ \ \ \ \ P(y_i=2|\vec{x}_i).P(y_i\neq2|\vec{x}_i)\right]\otimes\vec{x}_i.\vec{x}_i^T\end{bmatrix} \\
-  \\
-  &amp;= -\sum_{i=1}^n\begin{bmatrix}P(y_i=1|\vec{x}_i).P(y_i\neq1|\vec{x}_i) \ \ \ \ \ - P(y_i=1|\vec{x}_i).P(y_i=2|\vec{x}_i) \\
-  -P(y_i=2|\vec{x}_i).P(y_i=1|\vec{x}_i) \ \ \ \ \ \ P(y_i=2|\vec{x}_i).P(y_i\neq2|\vec{x}_i)
-  \end{bmatrix} \otimes \vec{x}_i.\vec{x}_i^T
- \end{aligned}\end{split}\]</div>
-<p><span class="math notranslate nohighlight">\(H\)</span> is positive definite. In the following way. 1. Sum of positive definite matrices is positive definite. H is sum of matrices. So, if we can show that the term inside sum is positive definite then H is positive definite. 2. Kronecker Product of two pd matrices is positive definite. It follows from the following theory:</p>
-<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>**Theory:** Let, $\mathbf{A_{mxm}}$ has eigen vectors **$\mathbf{x_i}$** with corresponding eigen value $\mathbf{\lambda_i, i = 1, \dots, m}$;
-$\mathbf{B_{nxn}}$ has eighen vectors $\mathbf{y_j}$ with corresponding eigen value $\mathbf{\mu_j, j = 1, \dots n}$.
-Then, eigen vectors of $\mathbf{A\otimes B}$ is $\mathbf{x_i \otimes y_j}$ with corresponding eigen value $\mathbf{\lambda_i.\mu_j}$.
-
-**Proof:** Here, $Ax_i = \lambda_i x_i$ and $By_j = \mu_j y_j$. Now by the property (standard easily available on internet) of Kronecker Product $(A\otimes B)(x_i\otimes y_j) = (Ax_i)\otimes (By_j)=(\lambda_i x_i)\otimes (\mu_j y_j) = \lambda_i\mu_j(x_i\otimes y_j)$. So, $x_i\otimes y_j$ is the eigen vector corresponding to eigenvector $\lambda_i\mu_j$
-
-Now, if **A** and **B** pd then both $\lambda_i$ and $\mu_j$ are positive. So is $\lambda_i\mu_j$ showing $A\otimes B$ is pd.
-
-So if we can show that both the operands of the Kronecker Product is pd, then H will be pd.
-</pre></div>
-</div>
-<ol class="arabic simple" start="3">
-<li><p><span class="math notranslate nohighlight">\(\vec{x}_i.\vec{x}_i^T\)</span> is pd. We have to prove <span class="math notranslate nohighlight">\(\begin{bmatrix}P(y_i=1|\vec{x}_i).P(y_i\neq1|\vec{x}_i) \ \ \ \ \ - P(y_i=1|\vec{x}_i).P(y_i=2|\vec{x}_i) \\  -P(y_i=2|\vec{x}_i).P(y_i=1|\vec{x}_i) \ \ \ \ \ \ P(y_i=2|\vec{x}_i).P(y_i\neq2|\vec{x}_i)  \end{bmatrix}\)</span> is pd.</p></li>
-</ol>
-<p>Now let,</p>
-<div class="math notranslate nohighlight">
-\[\begin{split}\begin{aligned}
-   P &amp;= \begin{bmatrix}
-   P(y_i=1|\vec{x}_i).P(y_i\neq1|\vec{x}_i) \ \ \ \ \ - P(y_i=1|\vec{x}_i).P(y_i=2|\vec{x}_i) \\
-  -P(y_i=2|\vec{x}_i).P(y_i=1|\vec{x}_i) \ \ \ \ \ \ P(y_i=2|\vec{x}_i).P(y_i\neq2|\vec{x}_i)
-  \end{bmatrix} \\
-   \\
-   &amp;= \begin{bmatrix}
-   P(y_i=1|\vec{x}_i).[1-P(y_i=1|\vec{x}_i)] &amp; - P(y_i=1|\vec{x}_i).P(y_i=2|\vec{x}_i) \\
-  -P(y_i=2|\vec{x}_i).P(y_i=1|\vec{x}_i) &amp; P(y_i=2|\vec{x}_i).[1-P(y_i=2|\vec{x}_i)]
-  \end{bmatrix} \\
-   \\
-   &amp;= \begin{bmatrix}
-   P(y_i=1|\vec{x}_i)-P^2(y_i=1|\vec{x}_i) &amp; - P(y_i=1|\vec{x}_i).P(y_i=2|\vec{x}_i) \\
-  -P(y_i=2|\vec{x}_i).P(y_i=1|\vec{x}_i) &amp; P(y_i=2|\vec{x}_i)-P^2(y_i=2|\vec{x}_i)]
-  \end{bmatrix} \\
-   \\
-   &amp;= \begin{bmatrix}
-   P(y_i=1|\vec{x}_i) &amp; 0 \\
-   0 &amp; P(y_i=2|\vec{x}_i)
-   \end{bmatrix} -
-   \begin{bmatrix}
-   P^2(y_i=1|\vec{x}_i) &amp; P(y_i=1|\vec{x}_i).P(y_i=2|\vec{x}_i) \\
-   P(y_i=1|\vec{x}_i).P(y_i=2|\vec{x}_i) &amp; P^2(y_i=2|\vec{x}_i)\end{bmatrix} \\
-   \\
-   &amp;= \begin{bmatrix}
-   P(y_i=1|\vec{x}_i) &amp; 0 \\
-   0 &amp; P(y_i=2|\vec{x}_i)
-   \end{bmatrix} -
-   \begin{bmatrix}
-   P(y_i=1|\vec{x}_i) \\
-   P(y_i=2|\vec{x}_i)\end{bmatrix}.
-   \begin{bmatrix}
-   P(y_i=1|\vec{x}_i) \\
-   P(y_i=2|\vec{x}_i)\end{bmatrix}^T
-   \end{aligned}\end{split}\]</div>
-<p>So,</p>
-<div class="math notranslate nohighlight">
-\[\begin{split}\begin{aligned}
-   &amp;  \vec{z}^T.P.\vec{z} \\
-   &amp;= \vec{z}^T.\begin{bmatrix}
-   P(y_i=1|\vec{x}_i) &amp; 0 \\
-   0 &amp; P(y_i=2|\vec{x}_i)
-   \end{bmatrix}.\vec{z} - \vec{z}^T.
-   \begin{bmatrix}
-   P(y_i=1|\vec{x}_i) \\
-   P(y_i=2|\vec{x}_i)\end{bmatrix}.
-   \begin{bmatrix}
-   P(y_i=1|\vec{x}_i) \\
-   P(y_i=2|\vec{x}_i)\end{bmatrix}^T.\vec{z} \\
-   \\
-   &amp;= \sum_{j=1}^2P(y_i=j|\vec{x}_i)z_j^2 \ \ - \ \ \left(\sum_{j=1}^2P(y_i=j|\vec{x}_i)z_j\right)^2  \end{aligned}\end{split}\]</div>
-<p>Now, by <strong>Cauchy-Schwarz Inequality</strong>,</p>
-<div class="math notranslate nohighlight">
-\[\left(\sum_{j=1}^n u_jv_j\right)^2 \ \ \leq \ \ \sum_{j=1}^n u_j^2.\sum_{j=1}^nv_j^2\]</div>
-<p>If we set, n =2, <span class="math notranslate nohighlight">\(u_j=\sqrt{P(y_i=j|\vec{x}_i)}\)</span> also as, <span class="math notranslate nohighlight">\(P(y_i=j|\vec{x}_i) \geq 0\)</span>, we can set <span class="math notranslate nohighlight">\(v_j=\sqrt{P(y_i=j|\vec{x}_i)}.z_j\)</span>; we get,</p>
-<div class="math notranslate nohighlight">
-\[\begin{split}\begin{aligned}
- &amp;\left(\sum_{j=1}^2 \sqrt{P(y_i=j|\vec{x}_i)}.\sqrt{P(y_i=j|\vec{x}_i)}.z_j\right)^2 \leq \sum_{j=1}^2P(y_i=j|\vec{x}_i).\sum_{j=1}^2P(y_i=j|\vec{x}_i).z_j^2 \\
- \implies &amp; \left(\sum_{j=1}^2 P(y_i=j|\vec{x}_i).z_j\right)^2 \leq \sum_{j=1}^2P(y_i=j|\vec{x}_i).z_j^2
-\end{aligned}\end{split}\]</div>
-<p>As, <span class="math notranslate nohighlight">\(\sum_{j=1}^2P(y_i=j|\vec{x}_i) = 1\)</span>.</p>
-<p>So, <span class="math notranslate nohighlight">\(\vec{z}^T.P.\vec{z} \geq 0\)</span>. So, P is positive semi-definite.</p>
+<p>Using the above steps we can prove that -H is negative semi-definite, so H is positive semi-definite.</p>
 </section>
 </section>
 
